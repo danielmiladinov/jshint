@@ -173,10 +173,13 @@ var JSHINT = (function () {
 			                      //   true     - "vars" + check last function param
 			                      //   "vars"   - skip checking unused function params
 			                      //   "strict" - "vars" + check all function params
-			latedef      : false  // warn if the variable is used before its definition
+			latedef      : false, // warn if the variable is used before its definition
 			                      //   false    - don't emit any warnings
 			                      //   true     - warn if any variable is used before its definition
 			                      //   "nofunc" - warn for any variable but function declarations
+			ignore       : false  // start/end ignoring lines of code, bypassing the linter
+			                      //   start    - start ignoring lines, including the current line
+			                      //   end      - stop ignoring lines, starting on the next line
 		},
 
 		// These are JSHint boolean options which are shared with JSLint
@@ -745,6 +748,18 @@ var JSHINT = (function () {
 						break;
 					case "nofunc":
 						state.option.latedef = "nofunc";
+						break;
+					default:
+						error("E002", nt);
+					}
+					return;
+				}
+
+				if (key === "ignore") {
+					switch (val) {
+					case "start":
+						break;
+					case "end":
 						break;
 					default:
 						error("E002", nt);
