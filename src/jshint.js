@@ -763,6 +763,13 @@ var JSHINT = (function () {
 					case "end":
 						state.ignoreLinterErrors = false;
 						break;
+					case "line":
+						// Any errors or warnings that happened on the current line, make them go away.
+						JSHINT.errors = _.reject(JSHINT.errors, function (error) {
+							// nt.line returns to the current line
+							return error.line === nt.line;
+						});
+						break;
 					default:
 						error("E002", nt);
 					}
