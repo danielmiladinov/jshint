@@ -758,8 +758,10 @@ var JSHINT = (function () {
 				if (key === "ignore") {
 					switch (val) {
 					case "start":
+						state.ignoreLinterErrors = true;
 						break;
 					case "end":
+						state.ignoreLinterErrors = false;
 						break;
 					default:
 						error("E002", nt);
