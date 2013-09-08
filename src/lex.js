@@ -1456,7 +1456,8 @@ Lexer.prototype = {
 			var endsWith = function (suffix) {
 				return this.indexOf(suffix, this.length - suffix.length) !== -1;
 			};
-			if (!(startsWith.call(this.input, "/*") || endsWith.call(this.input, "*/"))) {
+			var inputTrimmed = this.input.trim();
+			if (! (startsWith.call(inputTrimmed, "/*") || endsWith.call(inputTrimmed, "*/"))) {
 				this.input = "";
 			}
 		}

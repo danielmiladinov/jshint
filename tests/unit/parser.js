@@ -3796,3 +3796,21 @@ exports["/*jshint ignore */ should allow the linter to skip blocked-out lines to
 
 	test.done();
 };
+
+exports["/*jshint ignore */ should be detected even with leading and/or trailing whitespace"] = function (test) {
+	var code = [
+		"	/*jshint ignore:start */",                                   // leading whitespace
+		"	 if (true) { alert('mixed tabs and spaces ignored'); }",     // should be ignored
+		"	/*jshint ignore:end */	",                                   // leading and trailing whitespace
+		"	 if (true) { alert('mixed tabs and spaces not ignored'); }", // should not be ignored
+		"	/*jshint ignore:start */   ",                                // leading and trailing whitespace
+		"	 if (true) { alert('mixed tabs and spaces ignored'); }",     // should be ignored
+		"	/*jshint ignore:end */	 "                                   // leading and trailing whitespace
+	];
+
+	TestRun(test)
+		.addError(4, "Mixed spaces and tabs.")
+		.test(code);
+
+	test.done();
+};
