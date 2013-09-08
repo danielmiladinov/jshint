@@ -3741,54 +3741,7 @@ exports["/*jshint ignore */ should be a good option and only accept start or end
 };
 
 exports["/*jshint ignore */ should allow the linter to skip blocked-out lines to continue finding errors in the rest of the code"] = function (test) {
-	var code = [
-		"/** @jsx React.DOM */",
-		"(function () {",
-		"	'use strict';",
-		"",
-		"	// Stub for React: http://facebook.github.io/react/index.html",
-		"	var React = (function () {",
-		"		return {",
-		"			createClass: function (spec) {",
-		"				void spec;",
-		"			},",
-		"",
-		"			renderComponent: function (nextComponent, container, callback) {",
-		"				void nextComponent;",
-		"				void container;",
-		"				void callback;",
-		"			}",
-		"		};",
-		"	}());",
-		"",
-		"	var Qux = React.createClass({",
-		"		render: function () {",
-		"			return (",
-		"				/*jshint ignore:start */",
-		"				<div data-foo-id={this.props.foo}>",
-		"					<input type=\"text\" value={this.props.bar} />",
-		"				</div>",
-		"				/*jshint ignore:end */",
-		"			);",
-		"		}",
-		"	});",
-		"",
-		"	// this should trigger an error - mixed spaces and tabs",
-		"	 if (true) {",
-		"		throw \"the above line should cause a linter error\";",
-		"	}",
-		"",
-		"	void Qux;",
-		"	var quxRendered = React.renderComponent(",
-		"		/*jshint ignore:start */",
-		"		<Qux foo={foo} bar={bar} />,",
-		"		$.find('[data-baz-id=\"' + baz + '\"]')[0]",
-		"		/*jshint ignore:end */",
-		"	);",
-		"",
-		"	return quxRendered;",
-		"}());"
-	];
+	var code = fs.readFileSync(__dirname + "/fixtures/gh826.js", "utf8");
 
 	TestRun(test)
 		.addError(33, "Mixed spaces and tabs.")
