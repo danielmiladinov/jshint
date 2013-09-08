@@ -3726,15 +3726,16 @@ exports["regression for GH-1227"] = function (test) {
 	test.done();
 };
 
-exports["/*jshint ignore */ should be a good option and only accept start or end as values"] = function (test) {
+exports["/*jshint ignore */ should be a good option and only accept start, end or line as values"] = function (test) {
 	var code = [
 		"/*jshint ignore:start*/",
 		"/*jshint ignore:end*/",
+		"/*jshint ignore:line*/",
 		"/*jshint ignore:badvalue*/"
 	];
 
 	TestRun(test)
-		.addError(3, "Bad option value.")
+		.addError(4, "Bad option value.")
 		.test(code);
 
 	test.done();
